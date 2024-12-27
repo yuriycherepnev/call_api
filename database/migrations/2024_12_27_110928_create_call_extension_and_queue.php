@@ -125,7 +125,7 @@ class CreateCallExtensionAndQueue extends Migration
      */
     public function up()
     {
-        Schema::create('call_group_extension', function (Blueprint $table) {
+        Schema::create(self::CALL_GROUP_EXTENSION, function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_call_group');
             $table->string('extension');
@@ -137,13 +137,13 @@ class CreateCallExtensionAndQueue extends Migration
         });
 
         foreach (self::EXTENSIONS as $extension) {
-            DB::table('call_group_extension')->insert([
+            DB::table(self::CALL_GROUP_EXTENSION)->insert([
                 'id_call_group' => $extension[0],
                 'extension' => $extension[1]
             ]);
         }
 
-        Schema::create('call_group_queue', function (Blueprint $table) {
+        Schema::create(self::CALL_GROUP_QUEUE, function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_call_group');
             $table->string('did');
@@ -156,7 +156,7 @@ class CreateCallExtensionAndQueue extends Migration
         });
 
         foreach (self::QUEUES as $queue) {
-            DB::table('call_group_queue')->insert([
+            DB::table(self::CALL_GROUP_QUEUE)->insert([
                 'id_call_group' => $queue[0],
                 'did' => $queue[1],
                 'queue' => $queue[2]
