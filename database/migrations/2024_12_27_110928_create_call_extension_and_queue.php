@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 class CreateCallExtensionAndQueue extends Migration
 {
-    const CALL_GROUP_QUEUE = 'call_group_queue';
-    const CALL_GROUP_EXTENSION = 'call_group_extension';
+    const TABLE_CALL_GROUP_QUEUE = 'call_group_queue';
+    const TABLE_CALL_GROUP_EXTENSION = 'call_group_extension';
 
     const EXTENSIONS = [
         [1, "104"],
@@ -125,7 +125,7 @@ class CreateCallExtensionAndQueue extends Migration
      */
     public function up()
     {
-        Schema::create(self::CALL_GROUP_EXTENSION, function (Blueprint $table) {
+        Schema::create(self::TABLE_CALL_GROUP_EXTENSION, function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_call_group');
             $table->string('extension');
@@ -137,13 +137,13 @@ class CreateCallExtensionAndQueue extends Migration
         });
 
         foreach (self::EXTENSIONS as $extension) {
-            DB::table(self::CALL_GROUP_EXTENSION)->insert([
+            DB::table(self::TABLE_CALL_GROUP_EXTENSION)->insert([
                 'id_call_group' => $extension[0],
                 'extension' => $extension[1]
             ]);
         }
 
-        Schema::create(self::CALL_GROUP_QUEUE, function (Blueprint $table) {
+        Schema::create(self::TABLE_CALL_GROUP_QUEUE, function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_call_group');
             $table->string('did');
@@ -156,7 +156,7 @@ class CreateCallExtensionAndQueue extends Migration
         });
 
         foreach (self::QUEUES as $queue) {
-            DB::table(self::CALL_GROUP_QUEUE)->insert([
+            DB::table(self::TABLE_CALL_GROUP_QUEUE)->insert([
                 'id_call_group' => $queue[0],
                 'did' => $queue[1],
                 'queue' => $queue[2]
@@ -171,7 +171,7 @@ class CreateCallExtensionAndQueue extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('call_group_extension');
-        Schema::dropIfExists('call_group_queue');
+        Schema::dropIfExists(self::TABLE_CALL_GROUP_QUEUE);
+        Schema::dropIfExists(self::TABLE_CALL_GROUP_EXTENSION);
     }
 }

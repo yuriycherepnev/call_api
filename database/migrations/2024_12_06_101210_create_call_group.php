@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateCallGroup extends Migration
 {
+    const TABLE_CALL_GROUP = 'call_group';
+
     private const CALL_GROUPS = [
         ["id" => 1, "name" => "Интернет-магазин"],
         ["id" => 2, "name" => "Оператор контакт центра"],
@@ -56,13 +58,13 @@ class CreateCallGroup extends Migration
      */
     public function up()
     {
-        Schema::create('call_group', function (Blueprint $table) {
+        Schema::create(self::TABLE_CALL_GROUP, function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
         });
 
         foreach (self::CALL_GROUPS as $group) {
-            DB::table('call_group')->insert([
+            DB::table(self::TABLE_CALL_GROUP)->insert([
                 'id' => $group['id'],
                 'name' => $group['name']
             ]);
@@ -74,6 +76,6 @@ class CreateCallGroup extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('call_group');
+        Schema::dropIfExists(self::TABLE_CALL_GROUP);
     }
 }

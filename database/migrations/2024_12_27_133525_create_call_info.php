@@ -82,6 +82,8 @@ class CreateCallInfo extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('call_info');
+        Schema::dropIfExists(self::TABLE_CALL_INFO);
+        Schema::dropIfExists(self::TABLE_CALL_TAG);
+        Schema::dropIfExists(self::TABLE_CALL_STATUS);
     }
 }
